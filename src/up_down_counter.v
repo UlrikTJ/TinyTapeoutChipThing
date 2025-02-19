@@ -21,13 +21,14 @@ module tt_um_UlrikTJ_up_down_counter (
         end else if (set) begin
             count <= set_value; // Load set_value if set is high
         end else if (enable) begin
-            if (up_down) begin
-                count <= count + 1; // Count up
-            end else begin
-                count <= count - 1; // Count down
+            if (up_down && count < 4'b1111) begin
+                count <= count + 1; // Count up, prevent overflow
+            end else if (!up_down && count > 4'b0000) begin
+                count <= count - 1; // Count down, prevent underflow
             end
         end
     end
+
 
     assign uo_out = {4'b0000, count}; // Output count on lower 4 bits
     assign uio_out = 8'b00000000;     // Not used
