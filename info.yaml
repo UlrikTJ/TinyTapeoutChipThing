@@ -29,7 +29,7 @@ pinout:
   ui[4]: "set_value[1]"      # Bits 6:3 for set value
   ui[5]: "set_value[2]"      # Bits 6:3 for set value
   ui[6]: "set_value[3]"      # Bits 6:3 for set value
-  ui[7]: "unused"            # No use for the 8th input, so it's marked unused
+  ui[7]: ""            # No use for the 8th input, so it's marked unused
 
   # Outputs
   uo[0]: "count[0]"          # Output: count[0]
