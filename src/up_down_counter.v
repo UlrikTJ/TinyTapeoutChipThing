@@ -9,27 +9,27 @@ module tt_um_UlrikTJ_up_down_counter (
     input wire ena             // Enable signal (unused)
 );
 
-    reg [3:0] count;
-    wire enable = ui_in[0];      // Using first input bit as enable
-    wire up_down = ui_in[1];     // Second input bit as up/down control
-    wire set = ui_in[2];         // Third input bit as set control
+    reg [7:0] count;                    // Increase count to 8-bit
+    wire enable = ui_in[0];             // Using first input bit as enable
+    wire up_down = ui_in[1];            // Second input bit as up/down control
+    wire set = ui_in[2];                // Third input bit as set control
     wire [3:0] set_value = ui_in[6:3];  // Bits 6:3 for set value
 
     always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            count <= 4'b0000; // Reset count to 0
-        end else if (set) begin
-            count <= set_value; // Load set_value if set is high
-        end else if (enable) begin
-            if (up_down && count < 4'b1111) begin
-                count <= count + 1; // Count up, prevent overflow
-            end else if (!up_down && count > 4'b0000) begin
-                count <= count - 1; // Count down, prevent underflow
-            end
+        if (!rst_n)
+            count <= 8'b00000000;  // Reset count to 0
+        else if (set)
+            count <= {4'b0000, set_value};  // Load 4-bit set_value into count's lower bits
+        else if (enable) begin
+            if (up_down && count < 8'b11111111) 
+                count <= count + 1;  // Count up (up to 255)
+            else if (!up_down && count > 8'b00000000) 
+                count <= count - 1;  // Count down (to 0)
         end
     end
 
-    assign uo_out = {4'b0000, count}; // Output count on lower 4 bits
+    assign uo_out = count;  // Output full 8-bit count
+
     assign uio_out = 8'b00000000;     // Explicitly assign unused IO outputs to 0
     assign uio_oe = 8'b00000000;      // Explicitly assign unused IO enables to 0
 
