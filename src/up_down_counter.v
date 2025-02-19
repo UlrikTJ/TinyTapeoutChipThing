@@ -1,4 +1,4 @@
-module up_down_counter (
+module tt_um_UlrikTJ_up_down_counter (
     input wire clk,            // TinyTapeout's clock
     input wire rst_n,          // Active-low reset
     input wire [7:0] ui_in,    // Dedicated inputs
