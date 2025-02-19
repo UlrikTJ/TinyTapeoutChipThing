@@ -1,12 +1,12 @@
 module tt_um_UlrikTJ_up_down_counter (
     input wire clk,            // TinyTapeout's clock
     input wire rst_n,          // Active-low reset
-    input wire [7:0]  ui_in,    // Dedicated inputs
+    input wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,  // Dedicated outputs
-    input wire [7:0]  uio_in,   // IOs: Input path
+    input wire [7:0] uio_in,   // IOs: Input path
     output wire [7:0] uio_out, // IOs: Output path
-    input  wire       ena,
-    output wire [7:0] uio_oe   // IOs: Enable path
+    output wire [7:0] uio_oe,  // IOs: Enable path
+    input wire ena             // Enable signal (unused)
 );
 
     reg [3:0] count;
@@ -29,9 +29,8 @@ module tt_um_UlrikTJ_up_down_counter (
         end
     end
 
-
     assign uo_out = {4'b0000, count}; // Output count on lower 4 bits
-    assign uio_out = 8'b00000000;     // Not used
-    assign uio_oe = 8'b00000000;      // Not used
+    assign uio_out = 8'b00000000;     // Explicitly assign unused IO outputs to 0
+    assign uio_oe = 8'b00000000;      // Explicitly assign unused IO enables to 0
 
 endmodule
