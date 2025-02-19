@@ -1,10 +1,11 @@
 module tt_um_UlrikTJ_up_down_counter (
     input wire clk,            // TinyTapeout's clock
     input wire rst_n,          // Active-low reset
-    input wire [7:0] ui_in,    // Dedicated inputs
+    input wire [7:0]  ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,  // Dedicated outputs
-    input wire [7:0] uio_in,   // IOs: Input path
+    input wire [7:0]  uio_in,   // IOs: Input path
     output wire [7:0] uio_out, // IOs: Output path
+    input  wire       ena,
     output wire [7:0] uio_oe   // IOs: Enable path
 );
 
